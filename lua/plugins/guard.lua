@@ -6,7 +6,7 @@ ft('lua')
     :lint('selene')
 
 ft('typescript')
-    :fmt('prettier')
+    :fmt('eslint')
     :lint('eslint')
 
 -- Call setup() LAST!

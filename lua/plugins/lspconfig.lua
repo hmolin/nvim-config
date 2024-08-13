@@ -1,6 +1,6 @@
 require('mason').setup()
 require('mason-lspconfig').setup({
-  ensure_installed = { "lua_ls", "tsserver", "bashls", "eslint", "terraformls" },
+  ensure_installed = { "lua_ls", "tsserver", "bashls", "terraformls" },
 })
 require('mason-lspconfig').setup_handlers({
   function(server_name)
