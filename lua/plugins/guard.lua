@@ -6,9 +6,10 @@ ft('lua')
     :lint('selene')
 
 ft('typescript')
-    :fmt('eslint')
-    :lint('eslint')
+    :fmt('eslint_d')
+    :lint('eslint_d')
 
+ft('typescript, javascript, typescriptreact'):fmt('eslint_d')
 -- Call setup() LAST!
 require('guard').setup({
   -- Choose to format on every write to a buffer

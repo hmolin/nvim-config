@@ -1,16 +1,10 @@
 require('mason').setup()
 require('mason-lspconfig').setup({
-  ensure_installed = { "lua_ls", "tsserver", "bashls", "terraformls", "eslint" },
+  ensure_installed = { "lua_ls", "ts_ls", "bashls", "terraformls", "eslint_d" },
 })
-require('mason-lspconfig').setup_handlers({
+require("mason-lspconfig").setup_handlers({
   function(server_name)
-    if server_name == "tsserver" then
-      server_name = "ts_ls"
-    end
-    local capabilities = require("cmp_nvim_lsp").default_capabilities()
-    require('lspconfig')[server_name].setup({
-      capabilities = capabilities,
-    })
+    require("lspconfig")[server_name].setup({})
   end,
 })
 
@@ -20,9 +14,10 @@ local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protoc
 -- Setup language servers
 local servers = {
   "lua_ls",
-  "tsserver",
+  "ts_ls",
   "bashls",
   "terraformls",
+  "vscode-html-language-server"
 }
 
 for _, lsp in ipairs(servers) do

@@ -53,6 +53,12 @@ require('lazy').setup({
     end
   },
   {
+    "mhartington/formatter.nvim",
+    config = function()
+      require("plugins.formatter")
+    end,
+  },
+  {
     'nvimdev/guard.nvim',
     dependencies = {
       "nvimdev/guard-collection",
