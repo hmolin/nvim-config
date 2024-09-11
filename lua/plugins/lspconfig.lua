@@ -1,6 +1,6 @@
 require('mason').setup()
 require('mason-lspconfig').setup({
-  ensure_installed = { "lua_ls", "ts_ls", "bashls", "terraformls", "eslint" },
+  ensure_installed = { "lua_ls", "ts_ls", "bashls", "terraformls" },
 })
 require("mason-lspconfig").setup_handlers({
   function(server_name)
@@ -17,7 +17,7 @@ local servers = {
   "ts_ls",
   "bashls",
   "terraformls",
-  "vscode-html-language-server"
+  "html"
 }
 
 for _, lsp in ipairs(servers) do
