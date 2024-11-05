@@ -6,6 +6,7 @@ require('lazy').setup({
   -- Coding
   {
     'nvim-treesitter/nvim-treesitter',
+    event = "BufRead",
     run = ':TSUpdate',
     config = function()
       require('plugins.treesitter')
@@ -28,22 +29,27 @@ require('lazy').setup({
     end
   },
   {
-    'hrsh7th/nvim-cmp',
+    "hrsh7th/nvim-cmp",
+    event = "InsertEnter",
     dependencies = {
-      'hrsh7th/cmp-nvim-lsp',
-      'hrsh7th/cmp-buffer',
-      'hrsh7th/cmp-path',
-      'hrsh7th/cmp-cmdline',
-      'saadparwaiz1/cmp_luasnip',
-      'L3MON4D3/LuaSnip',
-      'zbirenbaum/copilot-cmp'
+      "hrsh7th/cmp-nvim-lsp",
+      "hrsh7th/cmp-buffer",
+      "hrsh7th/cmp-path",
+      "hrsh7th/cmp-cmdline",
+      "saadparwaiz1/cmp_luasnip",
+      "L3MON4D3/LuaSnip",
+      "zbirenbaum/copilot-cmp",
+      "onsails/lspkind-nvim",
+      "rafamadriz/friendly-snippets",
     },
+    build = "make install_jsregexp",
     config = function()
-      require('plugins.cmp')
-    end
+      require("plugins.cmp")
+    end,
   },
   {
     'neovim/nvim-lspconfig',
+    event = "BufReadPre",
     dependencies = {
       'williamboman/mason.nvim',
       'williamboman/mason-lspconfig.nvim',
@@ -54,18 +60,10 @@ require('lazy').setup({
   },
   {
     "mhartington/formatter.nvim",
+    event = "BufWritePre",
     config = function()
       require("plugins.formatter")
     end,
-  },
-  {
-    'nvimdev/guard.nvim',
-    dependencies = {
-      "nvimdev/guard-collection",
-    },
-    config = function()
-      require("plugins.guard")
-    end
   },
   {
     'tpope/vim-surround',

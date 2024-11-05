@@ -1,7 +1,14 @@
 local cmp = require("cmp")
 local luasnip = require("luasnip")
+local lspkind = require("lspkind")
+
+require("luasnip.loaders.from_vscode").lazy_load()
+luasnip.filetype_extend("typescriptreact", { "typescriptreact", "typescript", "javascriptreact", "javascript" })
+luasnip.filetype_extend("lua", { "vim" })
+luasnip.filetype_extend("typescriptreact", { "html" })
 
 require("copilot_cmp").setup()
+require("CopilotChat.integrations.cmp").setup()
 
 cmp.setup({
   window = {
@@ -50,12 +57,9 @@ cmp.setup({
   sorting = {
     priority_weight = 2,
     comparators = {
-      require("copilot_cmp.comparators").prioritize,
-
-      -- Below is the default comparitor list and order for nvim-cmp
-      cmp.config.compare.offset,
-      -- cmp.config.compare.scopes, --this is commented in nvim-cmp too
       cmp.config.compare.exact,
+      require("copilot_cmp.comparators").prioritize,
+      cmp.config.compare.offset,
       cmp.config.compare.score,
       cmp.config.compare.recently_used,
       cmp.config.compare.locality,
@@ -66,13 +70,29 @@ cmp.setup({
     },
   },
   sources = cmp.config.sources({
-    { name = "nvim_lsp" },
-    { name = "luasnip" },
-    { name = "copilot" },
-  }, {
+    { name = "nvim_lsp", priority_weight = 10 },
+    { name = "luasnip",  priority_weight = 5 },
+    { name = "copilot",  priority_weight = 2 },
     { name = "buffer" },
     { name = "path" },
   }),
+  formatting = {
+    format = lspkind.cmp_format({
+      mode = "symbol", -- show only symbol annotations
+      maxwidth = 120, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
+      -- can also be a function to dynamically calculate max width such as
+      -- maxwidth = function() return math.floor(0.45 * vim.o.columns) end,
+      ellipsis_char = "...",  -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
+      show_labelDetails = false, -- show labelDetails in menu. Disabled by default
+      symbol_map = { Copilot = "" },
+
+      -- The function below will be called before any actual modifications from lspkind
+      -- so that you can provide more controls on popup customization. (See [#30](https://github.com/onsails/lspkind-nvim/pull/30))
+      before = function(entry, vim_item)
+        return vim_item
+      end,
+    }),
+  },
 })
 
 -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
@@ -80,6 +100,7 @@ cmp.setup.cmdline("/", {
   sources = {
     { name = "buffer" },
   },
+  mapping = cmp.mapping.preset.cmdline(),
 })
 
 -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
@@ -89,4 +110,5 @@ cmp.setup.cmdline(":", {
   }, {
     { name = "cmdline" },
   }),
+  mapping = cmp.mapping.preset.cmdline(),
 })
