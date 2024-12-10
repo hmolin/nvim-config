@@ -15,7 +15,7 @@ require('lazy').setup({
   {
     "CopilotC-Nvim/CopilotChat.nvim",
 
-    branch = "canary",
+    branch = "main",
     event = 'BufWinEnter',
     dependencies = {
       "zbirenbaum/copilot.lua",
